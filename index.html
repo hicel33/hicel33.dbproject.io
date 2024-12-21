@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopEasy - Your Online Store</title>
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: #333;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.1rem;
+        }
+
+        .cart-icon {
+            position: relative;
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background-color: #ff4444;
+            color: white;
+            border-radius: 50%;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        /* Main content */
+        main {
+            margin-top: 80px;
+            padding: 2rem;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Product grid */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 2rem 0;
+        }
+
+        .product-card {
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        /* Login form */
+        .login-container {
+            max-width: 400px;
+            margin: 2rem auto;
+            padding: 2rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        /* Cart styles */
+        .cart-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* Buttons */
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <h1 style="color: white;">ShopEasy</h1>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="products.html">Products</a>
+                <a href="login.html">Login</a>
+                <a href="cart.html" class="cart-icon">
+                    Cart
+                    <span class="cart-count">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main>
+        <!-- Products Grid -->
+        <section class="product-grid">
+            <div class="product-card">
+                <img src="/api/placeholder/250/200" alt="Product 1" class="product-image">
+                <h3>Product Name</h3>
+                <p>$99.99</p>
+                <button class="btn btn-primary">Add to Cart</button>
+            </div>
+            <!-- More product cards would be generated dynamically -->
+        </section>
+
+        <!-- Login Form -->
+        <section class="login-container" style="display: none;">
+            <h2>Login</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </section>
+
+        <!-- Shopping Cart -->
+        <section class="cart-container" style="display: none;">
+            <h2>Your Cart</h2>
+            <div class="cart-items">
+                <!-- Cart items would be generated dynamically -->
+                <div class="cart-item">
+                    <span>Product Name</span>
+                    <span>$99.99</span>
+                    <button class="btn btn-danger">Remove</button>
+                </div>
+            </div>
+            <div class="cart-total">
+                <h3>Total: $99.99</h3>
+                <button class="btn btn-primary">Checkout</button>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Basic JavaScript functionality
+        document.addEventListener('DOMContentLoaded', () => {
+            // Sample product data
+            const products = [
+                { id: 1, name: 'Product 1', price: 99.99, image: '/api/placeholder/250/200' },
+                { id: 2, name: 'Product 2', price: 149.99, image: '/api/placeholder/250/200' },
+                // Add more products
+            ];
+
+            // Cart functionality
+            let cart = [];
+            
+            function updateCartCount() {
+                const cartCount = document.querySelector('.cart-count');
+                cartCount.textContent = cart.length;
+            }
+
+            function addToCart(product) {
+                cart.push(product);
+                updateCartCount();
+                // You would typically save this to localStorage or a backend
+            }
+
+            // Login form handling
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
+                    // Here you would typically make an API call to your backend
+                    console.log('Login attempt:', { email, password });
+                });
+            }
+
+            // Add to cart button handling
+            document.querySelectorAll('.btn-primary').forEach(button => {
+                button.addEventListener('click', (e) => {
+                    if (e.target.textContent === 'Add to Cart') {
+                        // Here you would get the actual product data
+                        const demoProduct = {
+                            id: 1,
+                            name: 'Product Name',
+                            price: 99.99
+                        };
+                        addToCart(demoProduct);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
